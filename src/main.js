@@ -6,7 +6,8 @@ define(["knockout",
 		"./templates/main",
 		"knockout-validation"],
 	function(ko, 
-			 Appl, 
+			 Appl,
+			 Routes, 
 			 notify, 
 			 dialog){
 
