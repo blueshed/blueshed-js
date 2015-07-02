@@ -1,0 +1,56 @@
+<div class="form-group" data-bind="validationElement: value,
+                                   css:{'has-error has-feedback':!value.isValid()}">
+    <!-- ko if: !$($element).parents("form").hasClass("form-horizontal")-->
+        <label data-bind="attr:{for:'val_'+ name +'_fld'},
+        				  text: $data.label || name">label</label>
+        <div class='input-group date'>
+            <input type="text" class="form-control" 
+                     data-bind="attr:{id:'val_'+ name +'_fld',
+                                      placeholder: $data.placeholder || name,
+                                      autofocus: $data.autofocus || false},
+                                datetimepicker: value,
+                                dateTimePickerOptions:{format:$data.dateFormat || 'YYYY-MM-DD HH:mm:ss'}" />
+          	<span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" 
+      		       data-bind="visible:!value.isValid(),attr:{title:value.error}"></span>
+            <span class="input-group-addon">
+               <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    <!-- /ko -->
+    <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+        <label class="col-sm-3 control-label"  data-bind="attr:{for:'val_'+ name +'_fld'},
+                                                          text: $data.label || name">label</label>
+        <div class="col-sm-9">
+            <div class='input-group date'>
+                <input type="text" class="form-control" 
+                         data-bind="attr:{id:'val_'+ name +'_fld',
+                                          placeholder: $data.placeholder || name,
+                                          autofocus: $data.autofocus || false},
+                                    datetimepicker: value,
+                                	dateTimePickerOptions:{format:$data.dateFormat || 'YYYY-MM-DD HH:mm:ss'}" />
+                <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" 
+                       data-bind="visible:!value.isValid(),attr:{title:value.error}"></span>
+                <span class="input-group-addon">
+                   <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    <!-- /ko -->
+</div>
+<span data-bind="template: { afterRender: function(){
+	 	if($data.link){
+	        $('#val_'+ $data.link +'_fld').on('dp.change',function (e) {
+	            $('#val_'+ $data.name +'_fld').data('DateTimePicker').minDate(e.date);
+	        });
+	        $('#val_'+ $data.name +'_fld').on('dp.change',function (e) {
+	            $('#val_'+ $data.link +'_fld').data('DateTimePicker').maxDate(e.date);
+	        });
+	 		if($('#val_'+ $data.link +'_fld').val()){
+	        	$('#val_'+ $data.name +'_fld').data('DateTimePicker').minDate($('#val_'+ $data.link +'_fld').val());
+	        }
+	        if($('#val_'+ $data.name +'_fld').val()){
+	        	$('#val_'+ $data.link +'_fld').data('DateTimePicker').maxDate($('#val_'+ $data.name +'_fld').val());
+	        }
+	 	}
+	 } 
+ }"></span>

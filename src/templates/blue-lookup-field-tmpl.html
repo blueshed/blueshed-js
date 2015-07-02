@@ -1,0 +1,29 @@
+<div class="form-group" data-bind="validationElement: value">
+    <!-- ko if: !$($element).parents("form").hasClass("form-horizontal")-->
+	    <label data-bind="attr:{for:'val_'+ name +'_fld'},
+	    						text: $data.label || name">label</label>
+	    <input type="hidden"
+	    	   data-bind="attr:{id:'val_'+ name +'_fld',
+	    						placeholder: $data.placeholder || name },
+	    				  style:{width: !$($element).parents('form').hasClass('form-inline') ? '100%' : null},
+	    	   			  select2Data: value,
+	    	   			  select2: { allowClear: true,
+									 minimumInputLength: $data.minimumInputLength || 3,
+									 query:query}" />
+    <!-- /ko -->
+   <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+	    <label class="col-sm-3 control-label" 
+	    	   data-bind="attr:{for:'val_'+ name +'_fld'},
+    							text: $data.label || name">label</label>
+	    <div class="col-sm-9">
+		    <input type="hidden"
+				   style="width:100%;"
+		    	   data-bind="attr:{id:'val_'+ name +'_fld',
+		    						placeholder: $data.placeholder || name },
+		    	   			  select2Data: value,
+		    	   			  select2: { allowClear: true,
+										 minimumInputLength: $data.minimumInputLength || 3,
+										 query:query}" />
+	    </div>
+	<!-- /ko -->
+</div>

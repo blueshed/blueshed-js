@@ -1,0 +1,41 @@
+<div class="form-group" data-bind="validationElement: value,
+                                   css:{'has-error has-feedback':!value.isValid()}">
+    <!-- ko if: !$($element).parents("form").hasClass("form-horizontal")-->
+	    <label data-bind="attr:{for:'val_'+ name +'_fld'},
+	    						text: $data.label || name">label</label>
+	    <div class="input-group" style="margin-bottom:6px;">
+	      	<span class="input-group-addon">
+				<select data-bind="foreach:colours,colour:value">
+					<option data-bind="text:name,attr:{'data-color':colour,value:$index}"></option>
+				</select>
+			</span>
+			  	<input type="text" class="form-control"
+			  		   data-bind="value:value,
+			  		   			  valueUpdate:'keyup',
+			  		   			  attr:{
+			  		   			  	id:'val_'+ name +'_fld',
+			  		   			  	placeholder: $data.placeholder || name
+			  		   			  }" />
+		</div>
+    <!-- /ko -->
+   <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+	    <label class="col-sm-3 control-label" data-bind="attr:{for:'val_'+ name +'_fld'},
+	    												 text: $data.label || name">label</label>
+	    <div class="col-sm-9">
+		    <div class="input-group" style="margin-bottom:6px;">
+		      	<span class="input-group-addon">
+					<select data-bind="foreach:colours,colour:value">
+    					<option data-bind="text:name,attr:{'data-color':colour,value:$index}"></option>
+					</select>
+				</span>
+			  	<input type="text" class="form-control"
+			  		   data-bind="value:value,
+			  		   			  valueUpdate:'keyup',
+			  		   			  attr:{
+			  		   			  	id:'val_'+ name +'_fld',
+			  		   			  	placeholder: $data.placeholder || name
+			  		   			  }" />
+			</div>
+	    </div>
+	<!-- /ko -->
+</div>

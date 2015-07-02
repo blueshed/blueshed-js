@@ -1,0 +1,73 @@
+<div class="form-group" data-bind="validationElement: value,
+                                   css:{'has-error has-feedback':value.isValid && !value.isValid()}">
+    <!-- ko if: !$($element).parents("form").hasClass("form-horizontal")-->
+        <label data-bind="attr:{for:'val_'+ name +'_fld'},
+        				  text: $data.label || name">label</label>
+		<div class="input-group">
+			<span class="input-group-btn"> <span
+				class="btn btn-default btn-file"> Browse&hellip; <input
+					name="image" type="file"  
+							data-bind="jqueryui:{ 
+											widget:'simpleUpload', 
+											options:{
+												url: ko.unwrap(url),
+												success: ko.unwrap(success) 
+											}
+										}">
+			</span></span> 
+			<span class="clearfield clearfield-img glyphicon glyphicon-remove-circle"
+				  data-bind="click:$data.value.bind($data,null),
+				  			 visible:value"></span>
+			<input type="text" class="form-control" readonly data-bind="attr:{value:value.peek()}" >
+			<span class="input-group-btn">
+				<a class="btn btn-default" 
+					data-toggle="collapse" 
+					data-bind="attr:{href:'#preview_'+ name +'_fld'}" 
+					aria-expanded="false" 
+					aria-controls="collapse">
+					<span class="glyphicon glyphicon-picture"></span>
+				</a>
+			</span>
+		</div>
+		<div data-bind="attr:{id:'preview_'+ name +'_fld'},css:{'in':$data.preview===true}" class="collapse">
+			<!-- ko if:value -->
+				<img class="thumbnail"
+					data-bind="attr:{src: (ko.unwrap($data.src) || ko.unwrap(url)) + value() }"
+					style="width: 100%" />
+			<!-- /ko -->
+			<!-- ko ifnot:value -->
+				<div class="thumbnail" style="text-align:center;padding-top:2em;padding-bottom:2em;">
+					<span class="fa fa-image fa-5x"></span>
+				</div>
+			<!-- /ko -->
+		</div>
+    <!-- /ko -->
+
+    <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+        <label class="col-sm-3 control-label"  data-bind="attr:{for:'val_'+ name +'_fld'},
+                                                          text: $data.label || name">label</label>
+        <div class="col-sm-5">
+			<div class="input-group">
+				<span class="input-group-btn"> <span
+					class="btn btn-default btn-file"> Browse&hellip; <input
+						name="image" type="file"  
+								data-bind="jqueryui:{ 
+												widget:'simpleUpload', 
+												options:{
+													url: ko.unwrap(url),
+													success: ko.unwrap(success) 
+												}
+											}">
+				</span>
+				</span> <input type="text" class="form-control" readonly data-bind="attr:{value:value.peek()}" >
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div data-bind="if:value">
+				<img class="thumbnail"
+					data-bind="attr:{src: (ko.unwrap($data.src) || ko.unwrap(url)) + value() }"
+					style="width: 100%" />
+			</div>
+		</div>
+    <!-- /ko -->
+</div>
