@@ -1,0 +1,41 @@
+<h1>Welcome</h1>
+<p data-bind="text:message"></p>
+<div class="row">
+	<div class="col-sm-4">
+		<div class="list-group" data-bind="foreach:items">
+			<a href="#" class="list-group-item"
+			   data-bind="css:{active:$data == $component.selected()},
+			   			  click:$component.selected,
+			   			  text: lastname + ', ' + firstname "></a>
+		</div>
+		<button class="btn btn-default"
+				data-bind="click:$component.add.bind($component)">Add</button>
+	</div>
+	<div class="col-sm-8">
+		<div class="fade" data-bind="css:{'in': editing}">
+			<form class="form-horizontal" data-bind="submit:$component.save.bind($component),
+													 with:editing">
+				<fieldset>
+					<blue-string-field params="name:'email',value:model.email,hasfocus:$component.start_editing"></blue-string-field>
+					<blue-string-field params="name:'firstname',value:model.firstname"></blue-string-field>
+					<blue-string-field params="name:'lastname',value:model.lastname"></blue-string-field>
+				</fieldset>
+				<div class="form-group">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-9">
+						<button class="btn btn-primary pull-right" 
+								type="submit"
+								data-bind="enable:can_save">Save</button>
+						<button class="btn btn-default pull-right"
+								style="margin-right:1em;" 
+								data-bind="visible:id,
+										   click:$component.cancel.bind($component)">Cancel</button>
+						<button class="btn btn-danger pull-left"
+								data-bind="click:$component.remove.bind($component)">Remove</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div data-bind="template:{ afterRender: $component.init.bind($component) }"></div>

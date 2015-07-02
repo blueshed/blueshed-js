@@ -1,0 +1,46 @@
+define([
+		"knockout",
+		"blueshed/bindings/ko-dirty"
+	],
+	function(ko){
+
+		function Editor(options, meta){
+			options = options || {};
+			this.meta = meta;
+			this.type = meta.type;
+			this.id = options.id || this.next_id();
+
+			this.model = {};
+			this.meta.fields.map(function(field){
+				this.model[field.name] = ko.observable(options[field.name || field.default_value])
+										   .extend(field.validation || {});
+			},this);
+
+			this.valid = ko.validatedObservable(this.model);
+			this.dirty = ko.dirtyFlag(this.model);
+			this.can_save = ko.pureComputed(function(){
+				return this.valid.isValid() && this.dirty.isDirty();
+			},this);
+		}
+
+		Editor.prototype.save = function(){
+			var result = {
+				_type: this.type,
+				id: this.id
+			};
+			this.meta.fields.map(function(field){
+				result[field.name] = ko.unwrap(this.model[field.name]);
+			},this);
+			return result;
+		};
+
+		Editor.prototype.id_seed = 0;
+		
+		Editor.prototype.next_id = function() {
+			Editor.prototype.id_seed = Editor.prototype.id_seed + 1;
+			return Editor.prototype.id_seed;
+		};
+
+		return Editor;
+	}
+);

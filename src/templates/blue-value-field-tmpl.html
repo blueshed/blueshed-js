@@ -1,0 +1,33 @@
+<div class="form-group" data-bind="validationElement: value,
+                                   css:{'has-error has-feedback':value.isValid ? !value.isValid() : false}">
+    <!-- ko if: !$($element).parents("form").hasClass("form-horizontal")-->
+        <label data-bind="attr:{for:'val_'+ name +'_fld'},
+        				  text: $data.label || name">label</label>
+        <input class="form-control" 
+        	   data-bind="attr:{id:'val_'+ name +'_fld',
+        	   					type: $data.type || 'text',
+        	   					placeholder: $data.placeholder || name,
+        	   					autofocus: $data.autofocus || false },
+                          enable: $data.enable != undefined ? $data.enable : true,
+        	   			  value: value " />
+      	<span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" 
+      		data-bind="visible:value.isValid ? !value.isValid() : false,attr:{title:value.error}"></span>
+    <!-- /ko -->
+
+    <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+        <label class="col-sm-3 control-label"  data-bind="attr:{for:'val_'+ name +'_fld'},
+                                                          text: $data.label || name">label</label>
+        <div class="col-sm-9">
+            <input class="form-control" 
+                   data-bind="attr:{id:'val_'+ name +'_fld',
+                                    type: $data.type || 'text',
+                                    placeholder: $data.placeholder || name,
+                                    autofocus: $data.autofocus || false },
+                              enable: $data.enable != undefined ? $data.enable : true,
+                              value: value " />
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" 
+                data-bind="visible:value.isValid ? !value.isValid() : false,attr:{title:value.error}"></span>
+        </div>
+    <!-- /ko -->
+
+</div>

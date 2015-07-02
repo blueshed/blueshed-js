@@ -1,0 +1,25 @@
+<div class="form-group" data-bind="validationElement: value,
+                                   css:{'has-error has-feedback':value.isValid ? !value.isValid() : false}">
+    <!-- ko if: !$($element).parents("form").hasClass("form-horizontal")-->
+	    <label data-bind="attr:{for:'val_'+ name +'_fld'},
+	    						text: $data.label || name">label</label>
+	    <textarea class="form-control"
+	    	   data-bind="attr:{id:'val_'+ name +'_fld',
+	    	   					placeholder: $data.placeholder || name,
+	    	   					rows: $data.rows || 3,
+		    	   				autofocus: $data.autofocus || false },
+	    	   			  value: value" ></textarea>
+    <!-- /ko -->
+   <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+	    <label class="col-sm-3 control-label" data-bind="attr:{for:'val_'+ name +'_fld'},
+	    												 text: $data.label || name">label</label>
+	    <div class="col-sm-9">
+		    <textarea class="form-control" 
+		    	   data-bind="attr:{id:'val_'+ name +'_fld',
+		    	   					placeholder: $data.placeholder || name,
+		    	   					rows: $data.rows || 3,
+		    	   					autofocus: $data.autofocus || false},
+		    	   			  value: value" ></textarea>
+	    </div>
+	<!-- /ko -->
+</div>

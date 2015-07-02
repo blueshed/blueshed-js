@@ -1,0 +1,38 @@
+<div class="form-group" data-bind="validationElement: value,
+								   validationOptions: {insertMessages: false},
+                                   css:{'has-error has-feedback':value.isValid ? !value.isValid() : false}">
+    <!-- ko ifnot: $($element).parents("form").hasClass("form-horizontal")-->
+        <label class="control-label"
+        	   data-bind="attr:{for:'val_'+ name +'_fld'}">
+        	<span data-bind="text: $data.label || name">label</span>
+        	<small data-bind="text:value.error"></small>
+        </label>
+        <input class="form-control" 
+        	   data-bind="attr:{id:'val_'+ name +'_fld',
+        	   					type: $data.type || 'text',
+        	   					placeholder: $data.placeholder || name},
+						  hasFocus: $data.hasfocus || false,
+                          enable: $data.enable != undefined ? $data.enable : true,
+        	   			  textInput: value " />
+      	<span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" 
+      		data-bind="visible:value.isValid?!value.isValid():false,attr:{title:value.error}"></span>
+    <!-- /ko -->
+
+    <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+        <label class="col-sm-3 control-label"  data-bind="attr:{for:'val_'+ name +'_fld'},
+                                                          text: $data.label || name">label</label>
+        <div class="col-sm-9">
+            <input class="form-control" 
+                   data-bind="attr:{id:'val_'+ name +'_fld',
+                                    type: $data.type || 'text',
+                                    placeholder: $data.placeholder || name},
+						  	  hasFocus: $data.hasfocus || false,
+                              enable: $data.enable != undefined ? $data.enable : true,
+                              textInput: value " />
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" 
+                data-bind="visible:value.isValid?!value.isValid():false,attr:{title:value.error}"></span>
+            <small class="help-block" data-bind="text:value.error"></small>
+        </div>
+    <!-- /ko -->
+
+</div>

@@ -1,0 +1,15 @@
+<div class="modal-dialog">
+  	<div class="modal-content">
+		<div class="modal-header" data-bind="css:header_css">
+	    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    	<h4><span data-bind="text:title"></span></h4>
+	  	</div>
+	  	<div class="modal-body">
+			<p data-bind="text:message"></p>
+	  	</div>
+	  	<div class="modal-footer">
+	    	<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+	    	<button class="btn" data-bind="css:action_css,click:action,text:action_label"></button>
+	  	</div>
+	</div>
+</div>

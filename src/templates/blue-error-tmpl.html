@@ -1,0 +1,8 @@
+<div class="alert alert-danger alert-dismissible fade in" role="alert"
+	data-bind="visible:error">
+	<button type="button" class="close" data-dismiss="alert"
+			data-bind="click:$data.error.bind($data,null)">
+		<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	</button>
+	<strong>Error!</strong> <span data-bind="text:error"></span>
+</div>

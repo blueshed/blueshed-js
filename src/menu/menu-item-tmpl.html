@@ -1,0 +1,23 @@
+<!-- ko if:title == '-' -->
+<li class="divider"></li>
+<!-- /ko -->
+<!-- ko ifnot:title == '-' -->
+ <li data-bind="css:{active:is_current}">
+ 	<!-- ko if:href=='#' -->
+	  <a href="#" data-bind="click:action">
+	    <!-- ko if:icon -->
+	      <span class="fa-fw" data-bind="css:icon"></span>
+	    <!-- /ko -->
+	    <span data-bind="text:title"></span>
+	  </a>
+	<!-- /ko -->
+ 	<!-- ko ifnot:href=='#' -->
+	  <a data-bind="attr:{href:href}">
+	    <!-- ko if:icon -->
+	      <span class="fa-fw" data-bind="css:icon"></span>
+	    <!-- /ko -->
+	    <span data-bind="text:title"></span>
+	  </a>
+	<!-- /ko -->
+</li>
+<!-- /ko -->

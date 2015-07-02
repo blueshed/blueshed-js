@@ -1,0 +1,37 @@
+{
+  "name": "blueshed",
+  "version": "0.0.1",
+  "homepage": "https://github.com/blueshed/blueshed",
+  "authors": [
+    "Peter Bunyan <pete@blueshed.co.uk>"
+  ],
+  "description": "a helper library for knockout and bootstrap",
+  "main": "src/main.js",
+  "keywords": [
+    "knockout",
+    "bootstrap",
+    "websockets"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "augment.js": "~1.0.0",
+    "bootstrap-notify": "~0.2.0",
+    "bootstrap": "~3.3.5",
+    "crossroads": "~0.12.0",
+    "font-awesome": "~4.3.0",
+    "hasher": "~1.2.0",
+    "knockout-mapping": "~2.4.1",
+    "knockout-validation": "~2.0.3",
+    "knockout": "~3.3.0",
+    "requirejs-text": "~2.0.14",
+    "requirejs-domready": "~2.0.1",
+    "requirejs": "~2.1.18"
+  }
+}

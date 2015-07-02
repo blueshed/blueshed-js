@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="a requirejs appl">
+    <meta name="author" content="Peter Bunyan">
+	<title>BootApp4</title>
+	<link rel="stylesheet" type="text/css" href="static/main-debug.css" />
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="static/images/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/images/apple-touch-icon-144-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/images/apple-touch-icon-114-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/images/apple-touch-icon-72-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" href="static/images/apple-touch-icon-57-precomposed.png"/>
+    <link rel="apple-touch-startup-image" href="static/images/startup.png"/>
+</head>
+<body>
+    <blue-menu-bar params="appl:$root"></blue-menu-bar>
+	<div class="container" data-bind="if:component" style="margin-top:60px;">
+		<blue-error params="error:error"></blue-error>
+		<div data-bind="component:{ 
+			 				name: component,
+			 				params:$root.component_params
+			 		    }"></div>
+	</div>
+    <div data-bind="visible:false">
+        <div style="width:240px;margin-left:auto;margin-right:auto;margin-top:240px;opacity:0.9;text-align:center;">
+            <h1> 
+                <img src="static/images/apple-touch-icon-57-precomposed.png" style="height:1em;"> 
+                BootApp4
+            </h1>
+            <i class="fa fa-spinner fa-pulse fa-5x text-allercate"></i>
+        </div>
+    </div>
+	<script type="text/javascript" src="static/bower_components/requirejs/require.js"
+			data-main="static/main-debug"></script>
+</body>
+</html>

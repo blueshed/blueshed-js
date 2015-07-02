@@ -1,0 +1,63 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-bind="with:appl">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" data-bind="html:routes.title"></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
+      <ul class="nav navbar-nav" data-bind="foreach:routes.menu_bar_left">
+          <!-- ko component:{name:$data.component_name || 'blue-menu-item', params:$data } -->
+          <!-- /ko -->
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          	<i class="fa fa-cog" data-bind="css:{
+          										 'fa-spin': loading,
+          										 'text-danger': !connected(),
+          										 'text-success': connected 
+          										}"></i> 
+          	<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- ko foreach:routes.services_menu -->
+              <!-- ko component:{name:$data.component_name || 'blue-menu-item', params:$data } -->
+              <!-- /ko -->
+            <!-- /ko -->
+          	<li class="dropdown-header" data-bind="if:user">
+          	 	 Signed in as 
+          	 	 <span data-bind="text:user().email"></span>
+          	</li>
+          	<!-- ko ifnot:$data.connected -->
+            <li class="dropdown-header" data-bind="text:$data.connection.status"></li>
+          	<li>
+          	  <a href="#" data-bind="click:$data.connection.connect.bind($data.connection)">
+          	   	Connect	
+          		</a>
+          	</li>
+          	<!-- /ko -->
+            <li>
+            	<a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" data-bind="foreach:routes.menu_bar_right">
+          <!-- ko component:{name:$data.component_name || 'blue-menu-item', params:$data } -->
+          <!-- /ko -->
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
