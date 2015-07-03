@@ -8,7 +8,7 @@ define([
 			options = options || {};
 			this.meta = meta;
 			this.type = meta.type;
-			this.id = options.id || this.next_id();
+			this.id = options.id === undefined ? this.next_id() : options.id;
 
 			this.model = {};
 			this.meta.fields.map(function(field){
