@@ -1,6 +1,7 @@
-<div class="form-group" data-bind="validationElement: value,
-								   validationOptions: {insertMessages: false},
-                                   css:{'has-error has-feedback':value.isValid ? !value.isValid() : false}">
+<div class="form-group" 
+     data-bind="validationElement: value,
+								validationOptions: {insertMessages: false},
+                css:{'has-error has-feedback':value.isValid ? !value.isValid() : false}">
     <!-- ko ifnot: $($element).parents("form").hasClass("form-horizontal")-->
         <label class="control-label"
         	   data-bind="attr:{for:'val_'+ name +'_fld'}">

@@ -7,6 +7,7 @@ require.config({
         "knockout":		  		"bower_components/knockout/dist/knockout.debug",
         "knockout-mapping": 	"bower_components/knockout-mapping/knockout.mapping",
         "knockout-validation":  "bower_components/knockout-validation/dist/knockout.validation",
+        "knockout-switch-case":  "bower_components/knockout-switch-case/knockout-switch-case",
 
         "domready": 	  		"bower_components/requirejs-domready/domReady",
         "text":           		"bower_components/requirejs-text/text",
@@ -19,7 +20,10 @@ require.config({
         "bootstrap":            "bower_components/bootstrap/dist/js/bootstrap",
         "bootstrap-notify":     "bower_components/bootstrap-notify/js/bootstrap-notify",        
 
-        "blueshed":             "components/blueshed"
+        "blueshed":             "components/blueshed",
+        
+        'jszip':                'bower_components/jszip/jszip',
+        'viz':                  'viz'
     },
     shim: {
         "bootstrap": {
@@ -28,8 +32,18 @@ require.config({
         "bootstrap-notify": {
             deps: ["bootstrap"]
         },
+        "viz": {
+          exports: "Viz"
+        },
+        "jszip": {
+          exports: "JSZip"
+        }
     },
-    packages:[]
+    packages: [{
+        name: "codemirror",
+        location: "bower_components/codemirror",
+        main: "lib/codemirror"
+    }]
 });
 
 require(

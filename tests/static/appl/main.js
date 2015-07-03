@@ -6,15 +6,18 @@ define(["knockout",
 		"blueshed/connection",
 		"blueshed/store",
 		"components/welcome/main",
-		"components/good-bye/main"],
+		"components/good-bye/main",
+		"components/modeling/main"],
 	function(ko, 
 			 Appl, Routes, notify, dialog,
 			 Connection, Store,
 			 Welcome, 
-			 GoodBye){
+			 GoodBye,
+			 Modeling){
 
 		ko.components.register("welcome",Welcome);
 		ko.components.register("good-bye",GoodBye);
+		ko.components.register("modeling",Modeling);
 
 		Appl.prototype.init = function(){
 			this.title("BootApp4");
@@ -44,11 +47,18 @@ define(["knockout",
 
 			this.routes.set_default(
 				this.routes.add_to_left_menu({
-					route: "welcome/:type:/:id:", 
-					action: this.welcome.bind(this), 
-					href: "#/welcome",
-					title: "Welcome"}
+					route: "modeling", 
+					action: this.modeling.bind(this), 
+					href: "#/modeling",
+					title: "Modeling"}
 				));
+
+			this.routes.add_to_left_menu({
+				route: "welcome/:type:/:id:", 
+				action: this.welcome.bind(this), 
+				href: "#/welcome",
+				title: "Welcome"}
+			);
 
 			this.routes.add_to_right_menu({
 				route: "finish", 
@@ -71,6 +81,12 @@ define(["knockout",
 			});
 
 			this.routes.start();
+		};
+
+
+		Appl.prototype.modeling = function(){
+			this.component_params={appl:this};
+			this.component("modeling");
 		};
 
 

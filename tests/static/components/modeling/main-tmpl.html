@@ -1,0 +1,245 @@
+<script type="text/html" id="model-view-tmpl">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="col-md-12" style="text-align:center;">
+				<div data-bind="html:$component.to_svg()"></div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script type="text/html" id="model-editor-tmpl">
+	<div class="row">
+		<div class="col-md-4">
+			<ul data-bind="foreach: models" class="nav nav-pills nav-stacked">
+				<li data-bind="css:{active:$data==$parent.edit_model()}">
+					<a href="#" data-bind="text:name,click:$parent.edit_model"></a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-8" data-bind="template:{name:'model-tmpl', data:edit_model, if:edit_model}">
+		</div>
+	</div>
+</script>
+
+<script type="text/html" id="lang-editor-tmpl">
+	<div class="row">
+		<div class="col-md-12">
+			<textarea data-bind="code_editor:get_lang_text()"></textarea>
+		</div>
+	</div>
+</script>
+
+<script type="text/html" id="sql-editor-tmpl">
+	<div class="row">
+		<div class="col-md-12">
+			<textarea data-bind="code_editor:get_sql_text()"></textarea>
+		</div>
+	</div>
+</script>
+
+<script type="text/html" id="json-editor-tmpl">
+	<div class="row">
+		<div class="col-md-12">
+			<div data-bind="codemirror: { value: model_view, options: model_view_options }"></div>
+		</div>
+	</div>
+</script>
+
+<!-- Creates a drop down button. 
+		expects: items [ko.observableArray], 
+				 selected_item [ko.observable] -->
+<script type="text/html" id="dropdown-btn-tmpl">
+	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		<!-- ko if:label -->
+		<span data-bind="text:selected_item"></span>
+		<!-- /ko -->
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" data-bind="foreach:items">
+		<li data-bind="if:$data !== '-',css:{divider:$data==='-'}">
+			<a href="#" data-bind="text:$data,
+								   click:function(d){ $parent.selected_item(d); }"></a>
+		</li>
+	</ul>
+</script>
+
+<script type="text/html" id="model-tmpl">
+	<div class="panel panel-default form-inline">
+		<div class="panel-heading">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-briefcase"></i>
+						</span>
+						<input class="form-control" type="text" placeholder="name" data-bind="value:name">
+						<span class="input-group-btn">
+							<button class="btn btn-danger" type="button" 
+									data-bind="click:function(){ $parent.remove_model($data);}">
+								Remove
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body" data-bind="foreach:attrs">
+			<div class="row" style="margin-bottom:6px;">
+				<div class="col-md-5">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-th-list"></i></span>
+						<input class="form-control" type="text" placeholder="attribute name" data-bind="value:name">
+						<span class="input-group-btn" data-bind="template:{
+							name:'dropdown-btn-tmpl',
+							data:{ items: $parents[1].attribute_types,
+								   label: true,
+								   selected_item: type } }">
+			
+						</span>
+					</div>
+				</div>
+				<div class="col-md-5">
+				<!-- ko switch: type -->
+					<!-- ko case: "String" -->
+						<input class="form-control" type="text" placeholder="size" data-bind="value:size">
+					<!-- /ko -->
+					<!-- ko case: "Numeric" -->
+						<input class="form-control" type="text" placeholder="precision" data-bind="value:precision">
+						<input class="form-control" type="text" placeholder="scale" data-bind="value:scale">
+					<!-- /ko -->
+					<!-- ko case: "Enum" -->
+						<input class="form-control" type="text" placeholder="values" data-bind="value:values">
+					<!-- /ko -->
+					<!-- ko case: "Integer" --><!-- /ko -->
+					<!-- ko case: "Datetime" --><!-- /ko -->
+					<!-- ko case: "Date" --><!-- /ko -->
+					<!-- ko case: "Time" --><!-- /ko -->
+					<!-- ko case: "Text" --><!-- /ko -->
+					<!-- ko case: "Boolean" --><!-- /ko -->
+					<!-- ko case: $default -->
+						<input class="form-control" type="text" placeholder="backref" data-bind="value:backref">
+						<label class="checkbox-inline">
+						  <input type="checkbox" data-bind="checked:m2m"> 
+						  <span class="glyphicon glyphicon-asterisk"></span>
+						</label>
+					<!-- /ko -->
+				<!-- /ko -->
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-sm btn-danger" type="button" 
+						data-bind="click:function(){ $parents[1].remove_attr($data);}">
+						Remove
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-th-list"></i></span>
+				<input class="form-control" type="text" autofocus="autofocus" placeholder="attribute name"
+							 data-bind="value:$parent.new_attr_name,
+										event:{keyup:function(item,e){ if(e.keyCode==13){ $parent.new_attr();} } }">
+				 <div class="input-group-btn">
+					<button class="btn btn-default" 
+						data-bind="click:$parent.wrap('new_attr',null,null,null)" 
+						tabindex="-1">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<div class="panel panel-default modeling-panel">
+	<div class="panel-heading" style="min-height:55px;">
+	<div class="btn-group pull-right">
+		<button class="btn btn-primary"
+				data-bind="click:function(){ view('model-editor-tmpl'); },
+						   css:{active:view()=='model-editor-tmpl'}">Model</button>
+		<button class="btn btn-primary"
+				data-bind="click:function(){ view('model-view-tmpl'); },
+						   css:{active:view()=='model-view-tmpl'}">Draw</button>
+		<button class="btn btn-success"
+				data-bind="click:function(){ view('lang-editor-tmpl'); },
+						   text:selected_lang,
+						   css:{active:view()=='lang-editor-tmpl'}">Language</button>
+		<button class="btn btn-warning"
+				data-bind="click:function(){ view('sql-editor-tmpl'); },
+						   text:selected_sql,
+						   css:{active:view()=='sql-editor-tmpl'}">SQL</button>
+		<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-cog"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			<li class="dropdown-header">Languages</li>
+			<!-- ko foreach:langs -->
+			<li>
+				<a href="#" data-bind="click:$parent.selected_lang">
+					<i class="fa fa-check" 
+						  data-bind="css:{'icon-white':$data!=$parent.selected_lang()}">
+					</i>
+					<span data-bind="text:$data"></span>
+				</a>
+			</li>
+			<!-- /ko -->
+			<li class="dropdown-header">SQLs</li>
+			<!-- ko foreach:sqls -->
+			<li>
+				<a href="#" data-bind="click:$parent.selected_sql">
+					<i class="fa fa-check"
+						  data-bind="css:{'icon-white':$data!=$parent.selected_sql()}">
+					</i>
+					<span data-bind="text:$data"></span>
+				</a>
+			</li>
+			<!-- /ko -->
+			<li class="divider"></li>
+			<li>
+				<a href="#" data-bind="click:$.proxy($data.download_zip,$data)">
+					<i class="fa fa-download"></i>
+					<span>Download</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<!-- ko if:view()=='json-editor-tmpl' -->
+		<form class="form-inline" data-bind="submit:$component.read_model.bind($component)">
+			<button class="btn btn-danger" data-bind="click:load_model">Load</button>
+			<div class="input-group">
+				<span class="input-group-btn"> 
+					<span class="btn btn-default btn-file">
+					    Browse <input type="file" class="form-control" name="schema_file" id="schema_file">
+					</span>
+				</span>
+				<input type="text" class="form-control" readonly>
+				<span class="input-group-btn"> 
+		    		<button class="btn btn-default" type="submit">Open</button>
+		    	</span>
+		    </div>
+		</form>
+
+	<!-- /ko -->
+	<!-- ko if:view()=='model-editor-tmpl' -->
+		<div class="input-group" style="padding-right:1em;">
+			<span class="input-group-btn">
+				<button class="btn btn-default" data-bind="click:$component.view_model.bind($component)">
+				<i class="fa fa-briefcase"></i>
+			</button>
+			</span>
+			<input type="text" autofocus="autofocus" class="form-control"
+				 placeholder="class name"
+				 data-bind="value:new_model_name,
+							enable: view()=='model-editor-tmpl',
+							event:{keyup:function(item,e){ if(e.keyCode==13){ new_model();} } }">
+			<span class="input-group-btn">
+			<button class="btn btn-default" type="button" 
+					data-bind="click:wrap('new_model',null),
+							   enable:view()=='model-editor-tmpl'">Add</button>
+			</span>
+		</div>
+	<!-- /ko -->
+</div>
+	<div class="panel-body" data-bind="template:view">
+	
+	</div>
+</div>

@@ -2,4 +2,7 @@
 @import url("bower_components/bootstrap/dist/css/bootstrap.css");
 @import url("bower_components/bootstrap-notify/css/bootstrap-notify.css");
 @import url("components/blueshed/main.css");
+@import url("components/blueshed/utils/simpleUpload.css");
 
+@import url("bower_components/codemirror/lib/codemirror.css");
+@import url("components/modeling/main.css");
