@@ -29,9 +29,19 @@ define([
 				id: this.id
 			};
 			this.meta.fields.map(function(field){
-				result[field.name] = ko.unwrap(this.model[field.name]);
+				if(field.read_only != true){
+					result[field.name] = ko.unwrap(this.model[field.name]);
+				}
 			},this);
 			return result;
+		};
+
+		Editor.prototype.update = function(options){
+			this.meta.fields.map(function(field){
+				if(options[field.name] !== undefined){
+					this[field.name].(options[field.name] || field.default_value);
+				}
+			},this);
 		};
 
 		Editor.prototype.id_seed = 0;
