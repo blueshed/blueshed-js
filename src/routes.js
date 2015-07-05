@@ -77,6 +77,10 @@ define([
 			hasher.setHash(hash); //set hash without dispatching changed signal
 			hasher.changed.active = true; //re-enable signal
 		};
+		
+		Routes.prototype.set_hash = function(hash){
+			hasher.setHash(hash); //set hash
+		};
 	
 		return Routes;
 	}

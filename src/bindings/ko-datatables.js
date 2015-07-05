@@ -12,7 +12,7 @@ define(["jquery","knockout","datatables"],function(jQuery,ko){
                     	$(row).data('row-data',data);
                     };
             	}
-                var oTable = jQuery(element).dataTable(binding.options);
+                var oTable = jQuery(element).DataTable(binding.options);
                 if(binding.options.selected_row !== undefined){
                 	jQuery(element).delegate("tbody tr","click", function(e){
                 		jQuery(element).find("tr").removeClass("selected");
@@ -27,16 +27,23 @@ define(["jquery","knockout","datatables"],function(jQuery,ko){
             var binding = ko.utils.unwrapObservable(valueAccessor());
             
             // If the binding isn't an object, turn it into one. 
-            if(!binding.data){
-            	return;
-                binding = { data: valueAccessor() }
+            if(binding && binding.options && binding.options.data){
+                var data = ko.unwrap(binding.options.data);
+            	
+                // Clear table
+                jQuery(element).DataTable().clear();
+                
+                // Rebuild table from data source specified in binding
+                jQuery(element).DataTable().rows.add(data);
+
+                // update table
+                jQuery(element).DataTable().draw();
+            } else {
+                // Clear table
+                jQuery(element).DataTable().clear();
+            	jQuery(element).DataTable().draw();
             }
             
-            // Clear table
-            jQuery(element).dataTable().fnClearTable();
-            
-            // Rebuild table from data source specified in binding
-            jQuery(element).dataTable().fnAddData(binding.data);
         }
     };
 
