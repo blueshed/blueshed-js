@@ -12,7 +12,7 @@ define([
 
 			this.model = {};
 			this.meta.fields.map(function(field){
-				this.model[field.name] = ko.observable(options[field.name || field.default_value])
+				this.model[field.name] = ko.observable(ko.unwrap(options[field.name]) || field.default_value)
 										   .extend(field.validation || {});
 			},this);
 
@@ -39,7 +39,7 @@ define([
 		Editor.prototype.update = function(options){
 			this.meta.fields.map(function(field){
 				if(options[field.name] !== undefined){
-					this.model[field.name](options[field.name] || field.default_value);
+					this.model[field.name](ko.unwrap(options[field.name]) || field.default_value);
 				}
 			},this);
 			if(options.id !== undefined){
