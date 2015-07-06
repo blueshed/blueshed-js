@@ -25,6 +25,8 @@ define(
 								observable(null);
 							}
 						}
+					}).on('dp.hide', function(){
+						$(element).blur();
 					});
 				},
 				update: function (element, valueAccessor) {
