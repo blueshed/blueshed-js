@@ -39,9 +39,12 @@ define([
 		Editor.prototype.update = function(options){
 			this.meta.fields.map(function(field){
 				if(options[field.name] !== undefined){
-					this[field.name](options[field.name] || field.default_value);
+					this.model[field.name](options[field.name] || field.default_value);
 				}
 			},this);
+			if(options.id !== undefined){
+				this.id = options.id;
+			}
 		};
 
 		Editor.prototype.id_seed = 0;
