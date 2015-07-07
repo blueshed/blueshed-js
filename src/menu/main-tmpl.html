@@ -41,7 +41,7 @@
           	<!-- ko ifnot:$data.connected -->
             <li class="dropdown-header" data-bind="text:$data.connection.status"></li>
           	<li>
-          	  <a href="#" data-bind="click:$data.connection.connect.bind($data.connection)">
+          	  <a href="#" data-bind="click:$data.connection.connect.bind($data.connection,null)">
           	   	Connect	
           		</a>
           	</li>
