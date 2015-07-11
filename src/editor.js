@@ -11,6 +11,7 @@ define([
 			this.id = options.id === undefined ? this.next_id() : options.id;
 
 			this.model = {};
+			this.options = options;
 			this.meta.fields.map(function(field){
 				this.model[field.name] = ko.observable(ko.unwrap(options[field.name]) || field.default_value)
 										   .extend(field.validation || {});

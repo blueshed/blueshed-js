@@ -1,1 +1,5 @@
 tests/static/bower_components/*
+
+.project
+
+.settings/
