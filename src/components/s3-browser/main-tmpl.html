@@ -1,0 +1,64 @@
+<!-- ko if:bucket -->
+<h3>
+	<!-- <i class="fa fa-cloud-upload pull-right" data-bind="click:$data.upload.bind($data)"></i> -->
+	<span data-bind="text:title"></span>
+</h3>
+<ol class="breadcrumb">
+	<a href="#" class="pull-right" data-bind="click:$data.list.bind($data)">
+		<i class="fa fa-refresh" data-bind="css:{'fa-spin':busy}"></i>
+	</a>
+	<!-- ko foreach:path -->
+		<!-- ko if: $parent.path.indexOf($data) == $parent.path().length-1 -->
+			<li class="active" data-bind="text:label">Data</li>
+		<!-- /ko -->
+		<!-- ko ifnot: $parent.path.indexOf($data) == $parent.path().length-1 -->
+			<li><a href="#" data-bind="text:label,click:$parent.go_back.bind($parent)">Home</a></li>
+		<!-- /ko -->
+	<!-- /ko -->
+</ol>
+<div class="row">
+	<div class="col-md-6">
+		<div class="list-group" data-bind="foreach:items">
+			<!-- ko ifnot: root -->
+			<a class="list-group-item" href="#" data-bind="click:$parent.open.bind($parent)">
+				<i class="fa fa-folder-o" data-bind="visible:type=='folder'"></i>
+				<i class="fa fa-file-o" data-bind="visible:type=='file'"></i>
+				<span data-bind="text:label"></span>
+			</a>
+			<!-- /ko -->
+		</div>
+	</div>
+	<div class="col-md-6">
+		<!-- ko if:selected_item -->
+		<h3>
+			<i class="fa fa-file"></i>
+			<span data-bind="text:selected_item().name"></span>
+		</h3>
+		<p>
+			<a target="s3_preview" class="btn btn-default" 
+				data-bind="attr:{href:selected_url}">Open</a>
+		</p>
+		<p>
+			<textarea data-bind="value:selected_url" rows="6" style="width:100%;"></textarea>
+		</p>
+		<!-- ko if:is_image -->
+		<div class="thumbnail">
+			<img data-bind="attr:{src:selected_url}" />
+		</div>
+		<pre data-bind="text:ko.toJSON(ko.toJS($data.selected_item),null,2)"></pre>
+		<!-- /ko -->
+		
+		<!-- /ko -->
+		<form action="/s3upload/" class="dropzone" id="mydropzone">
+			<div>
+				<label>Drop Path</label>
+				<input type="text" class="form-control" data-bind="textInput:drop_path" />
+			</div>
+		  	<div class="fallback">
+		    	<input name="file" type="file" multiple />
+		  	</div>
+		</form>
+	</div>
+</div>
+<div data-bind="template:{ afterRender: $component.init.bind($component) }"></div>
+<!-- /ko -->

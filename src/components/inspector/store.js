@@ -15,6 +15,7 @@ define(["knockout",
             this.error = error;
             this.notify = notify;
             this.open = ko.observable(false);
+            this.broadcast = ko.observable();
 
             this.model = ko.observableArray();
             this._meta = {};
@@ -40,9 +41,10 @@ define(["knockout",
                             (property.attr=="hybrid" && property.read_only==true);
                     },this),
                     scalars: properties.filter(function(property){
-                        return DEFAULT_TYPES.indexOf(property.type) != -1 ||
+                        return property.attr!="pk" && 
+                        	(DEFAULT_TYPES.indexOf(property.type) != -1 ||
                             (property.direction == "MANYTOONE") ||
-                            (property.attr=="hybrid" && property.read_only==true);
+                            (property.attr=="hybrid" && property.read_only==true));
                     },this),
                     // load relations
                     relations: properties.filter(function(property){
@@ -70,13 +72,17 @@ define(["knockout",
                                 return ko.utils.unwrapObservable(data.id);
                             }.bind(this),
                             update: function(options){
-                                return this._update(related,options.target,options.data)
+                            	if(options.data){
+                            		return this._update(related,options.target,options.data);
+                            	}
                             }.bind(this)
                         };
                     } else if(item.direction == "MANYTOONE"){
                         obj.mapping[item.name] = {
                             update: function(options){
-                                return this._update(related,options.target,options.data)
+                            	if(options.data){
+                            		return this._update(related,options.target,options.data);
+                            	}
                             }.bind(this)
                         };
 
@@ -287,15 +293,18 @@ define(["knockout",
         Store.prototype._handle_update = function(msg){
             if(msg.signal.indexOf("created ") == 0){
                 var meta = this._get_message_type_meta(msg);
-                this._objs[meta.type].push(this._map(meta,msg.message));
+                var item = this._map(meta,msg.message);
+                this._objs[meta.type].push(item);
                 // todo: watch relations and see if it should
                 // be put into any collection
+                this.broadcast({signal:"created",item:item});
             }
             else if(msg.signal.indexOf("saved ") == 0){
                 var meta = this._get_message_type_meta(msg);
                 var item = this._find_by_id(meta, this._objs[meta.type],msg.message.id);
                 if(item){
                     this._update(meta,item,msg.message);
+                    this.broadcast({signal:"updated",item:item});
                 }
             }
             else if(msg.signal.indexOf("deleted ") == 0){
@@ -305,6 +314,7 @@ define(["knockout",
                     this._objs[meta.type].remove(item);
                     // todo: walk relations and see if it should
                     // be removed from any collection
+                    this.broadcast({signal:"deleted",item:item});
                 }
             }
             else if(msg.signal.indexOf("added") != -1){

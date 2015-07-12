@@ -65,14 +65,44 @@ define([
 			},this);
 
 
-			this.sub = this.selected.subscribe(function(item){
-				this.reset();
-				this.load();
-			},this);
+			this.subs = [
+			    this.selected.subscribe(function(item){
+					this.reset();
+					this.load();
+				},this),
+				this.store.broadcast.subscribe(function(msg){
+					if(msg){
+						if(msg.signal=="created"){
+							// should we add it to the list??
+						}
+						if(msg.signal=="updated"){
+							// noop - our items in items are updated by store
+						}
+						if(msg.signal=="deleted"){
+							var item = this.find_item_by_id(msg.item._type,msg.item.id);
+							if(item){
+								if(item == this.selected_data()){
+									this.selected_data(null);
+								}
+								this.items.remove(item);
+							}
+						}
+					}
+				},this)
+			];
 		}
 
 		Cursor.prototype.dispose = function() {
-			this.sub.dispose();
+			this.subs.map(function(item){
+				item.dispose();
+			});
+		};
+		
+		
+		Cursor.prototype.find_item_by_id = function(type, id){
+			return this.items().find(function(item){
+				return ko.unwrap(item._type)==type && ko.unwrap(item.id)==id;
+			});
 		};
 
 		Cursor.prototype.load_entity = function(entity, match, value) {
@@ -190,6 +220,7 @@ define([
 		};
 
 		Cursor.prototype.surrogate_for = function(item){
+			item = ko.unwrap(item);
 			if(item){
 				var text = item._type + "[" + ko.unwrap(item.id) + "]";
 				if(item.name){
@@ -210,6 +241,7 @@ define([
 			if(result){
 				return result.text;
 			}
+			return null;
 		};
 
 		return Cursor;

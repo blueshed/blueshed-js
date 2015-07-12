@@ -17,6 +17,15 @@
 					<pre data-bind="text:ko.toJSON($value,null,2)"></pre>
 				</div>
 				<!-- /ko -->
+				<!-- ko case: $value.read_only -->
+				
+				<!-- /ko -->
+				<!-- ko case: $value.fkey -->
+				
+				<!-- /ko -->
+				<!-- ko case: $value.type == 'Enum' -->
+				
+				<!-- /ko -->
 				<!-- ko case: $value.type == 'String' -->
 				<div class="col-sm-6 col-md-4 col-lg-3">
 					<blue-string-field params="name:name,
@@ -86,12 +95,6 @@
 							   query: $component.filter.bind($component,$data)">
 					</blue-select2-field>
 				</div>
-				<!-- /ko -->
-				<!-- ko case: $value.read_only -->
-				<!-- /ko -->
-				<!-- ko case: $value.fkey === true -->
-				<!-- /ko -->
-				<!-- ko case: $value.type == 'Enum' -->
 				<!-- /ko -->
 			<!-- /ko -->
 		</div>

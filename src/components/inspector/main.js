@@ -130,7 +130,6 @@ define([
 					this.appl.close_dialog();
 					this.appl.store.remove(this.cursor.selected_data(), function(){
 						this.cancel();
-						this.cuursor.load(); // NO tbd:signal internally
 						this.appl.notify("Removed!");
 					}.bind(this));
 				}.bind(this),"Remove","danger");
