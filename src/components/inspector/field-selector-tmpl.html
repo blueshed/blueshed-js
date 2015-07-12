@@ -1,0 +1,19 @@
+<div class="sort-visible-panel">
+	<div data-bind="sortable:order_columns">
+		<div>
+			<i class="fa fa-navicon fa-fw pull-right"></i>
+			<label>
+				<input type="checkbox"
+					   data-bind="checkedValue:$data,
+					   			  checked:$parent.visible_columns"/>
+				<span data-bind="text:name"></span>
+			</label>
+		</div>
+	</div>
+	<hr/>
+	<label>
+		<input type="checkbox" value="1"
+			   data-bind="checked:show_types"/>
+		<span>show types</span>
+	</label>
+</div>

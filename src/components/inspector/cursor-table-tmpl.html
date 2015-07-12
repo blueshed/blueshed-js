@@ -1,0 +1,50 @@
+<div class="table-responsive">
+	<table class="table table-bordered table-condensed table-hover">
+		<thead>
+			<tr>
+				<!-- ko foreach:columns -->
+				<th data-bind="click:$parent.change_order_by.bind($parent,$data.name)">
+					<span data-bind="text:name"></span>
+					<!-- ko if: $parent.show_types -->
+					<small class="text-muted">
+						[<span data-bind="text:type"></span>]
+					</small>
+					<!-- /ko -->
+					<!-- ko if: $parent.order_by()==$data.name -->
+						<span>
+							<!-- ko if: $parent.order_by_asc() -->
+							<i class="fa fa-arrow-circle-up fa-fw"></i>
+							<!-- /ko -->
+							<!-- ko ifnot: $parent.order_by_asc()-->
+							<i class="fa fa-arrow-circle-down fa-fw"></i>
+							<!-- /ko -->
+						</span>
+					<!-- /ko -->
+				</th>
+				<!-- /ko -->
+			</tr>
+			<tr class="search-row">
+				<!-- ko foreach:columns -->
+				<th>
+					<input type="text" data-bind="textInput:$data.search"/>
+				</th>
+				<!-- /ko -->
+			</tr>
+		</thead>
+		<tbody data-bind="foreach:items">
+			<tr data-bind="click:$component.selected_data,
+							css:{selected:$data==$component.selected_data()}">
+				<!-- ko foreach:$parent.columns -->
+				<!-- ko switch: $data -->
+				<!-- ko case: $default -->
+				<td data-bind="text:$parent[$value.name]"></td>
+				<!-- /ko -->
+				<!-- ko case: $value.direction=="MANYTOONE" -->
+				<td data-bind="text: $component.surrogate_text($parent[$value.name]) "></td>
+				<!-- /ko -->
+				<!-- /ko -->
+				<!-- /ko -->
+			</tr>
+		</tbody>
+	</table>
+</div>

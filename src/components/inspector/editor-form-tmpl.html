@@ -1,0 +1,98 @@
+<form class="form" 
+	data-bind="submit:$component.save,with:editing">
+	<legend>
+		<button type="button" class="close" aria-hidden="true"
+			data-bind="click:$component.close.bind($component)">
+			<i class="fa fa-close fa-fw"></i>
+		</button>
+		<span data-bind="text:id?'Edit':'Create'"></span>
+		<span data-bind="text:type"></span>
+	</legend>
+	<fieldset>
+		<div class="row" data-bind="foreach:meta.scalars">
+			<!-- ko switch: $data -->
+				<!-- ko case: $default -->
+				<div class="col-sm-6 col-md-4 col-lg-3">
+						<blue-string-field params="name:name,
+											   	   value:$parent.model[name]"></blue-string-field>
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.type == 'Datetime' -->
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<blue-date-field params="name:name,
+										 	 value:$parent.model[name]"></blue-date-field>
+				
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.type == 'Date' -->
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<blue-date-field params="name:name,
+										 value:$parent.model[name]
+										 dateFormat:'YYYY-MM-DD'"></blue-date-field>
+				
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.type == 'Time' -->
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<blue-date-field params="name:name,
+										 value:$parent.model[name]
+										 dateFormat:'YYYY-MM-DD'"></blue-date-field>
+				
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.info['type']=='image' -->
+				<div class="col-sm-6 col-md-8 col-lg-8">
+					<div class="form-group">
+						<label class="control-label" data-bind="text:name"></label>
+						<img class="thumbnail"
+							data-bind="attr:{src: $parent.model[name] },
+									  click:$component.open_photo.bind($component,$data.name, $parent.model[name]"
+							style="max-width: 100%" />
+						<small data-bind="text:$data"></small>
+					</div>	
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label class="control-label">Upload:</label>
+						<div data-bind="attr:{id:'_'+$data.name+'_uploader_'},
+										dropzone:$component.photo_args($data)"></div>
+					</div>
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.info['type']=='colour' -->
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<blue-colour-field params="name:name,
+											   $parent.model[name],
+											   colours:$component.colours"></blue-colour-field>
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.direction=='MANYTOONE' -->
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<blue-select2-field params="name: name,
+							   value: $parent.model[fkey],
+							   placeholder: $component.placeholder($data,$parent.options[$data.name]),
+							   query: $component.filter.bind($component,$data)">
+					</blue-select2-field>
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.read_only -->
+				<!-- /ko -->
+				<!-- ko case: $value.fkey === true -->
+				<!-- /ko -->
+			<!-- /ko -->
+		</div>
+	</fieldset>
+	<div class="form-group">
+		<button class="btn btn-primary pull-right" 
+				type="submit"
+				data-bind="enable:can_save">
+			<span data-bind="text:id?'Save':'Create'"></span>
+		</button>
+		<button class="btn btn-danger pull-right"
+				style="margin-right:1em;" 
+				data-bind="click:$component.remove">
+			Remove
+		</button>
+		<div class="clearfix"/>
+	</div>
+</form>
