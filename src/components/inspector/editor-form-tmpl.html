@@ -13,11 +13,23 @@
 			<!-- ko switch: $data -->
 				<!-- ko case: $default -->
 				<div class="col-sm-6 col-md-4 col-lg-3">
-						<blue-string-field params="name:name,
-											   	   value:$parent.model[name]"></blue-string-field>
+					Unknown type:
+					<pre data-bind="text:ko.toJSON($value,null,2)"></pre>
 				</div>
 				<!-- /ko -->
-				<!-- ko case: $value.type == 'Datetime' -->
+				<!-- ko case: $value.type == 'String' -->
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<blue-string-field params="name:name,
+										   	   value:$parent.model[name]"></blue-string-field>
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.type == 'Integer' || $value.type == 'Decimal' -->
+				<div class="col-sm-6 col-md-4 col-lg-3">
+					<blue-string-field params="name:name,
+										   	   value:$parent.model[name]"></blue-string-field>
+				</div>
+				<!-- /ko -->
+				<!-- ko case: $value.type == 'DateTime' -->
 				<div class="col-sm-6 col-md-4 col-lg-3">
 					<blue-date-field params="name:name,
 										 	 value:$parent.model[name]"></blue-date-field>
@@ -78,6 +90,8 @@
 				<!-- ko case: $value.read_only -->
 				<!-- /ko -->
 				<!-- ko case: $value.fkey === true -->
+				<!-- /ko -->
+				<!-- ko case: $value.type == 'Enum' -->
 				<!-- /ko -->
 			<!-- /ko -->
 		</div>

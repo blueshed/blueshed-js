@@ -1,5 +1,5 @@
 <div class="form-group" data-bind="validationElement: value,
-                                   css:{'has-error has-feedback':!value.isValid()}">
+                                   css:{'has-error has-feedback':value.isValid ? !value.isValid() : false}">
     <!-- ko if: !$($element).parents("form").hasClass("form-horizontal")-->
         <label data-bind="attr:{for:'val_'+ name +'_fld'},
         				  text: $data.label || name">label</label>
@@ -11,7 +11,7 @@
                                 datetimepicker: value,
                                 dateTimePickerOptions:{format:$data.dateFormat || 'YYYY-MM-DD HH:mm:ss'}" />
           	<span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" 
-      		       data-bind="visible:!value.isValid(),attr:{title:value.error}"></span>
+      		       data-bind="visible:value.isValid ? !value.isValid() : false,attr:{title:value.error}"></span>
             <span class="input-group-addon">
                <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -29,7 +29,7 @@
                                     datetimepicker: value,
                                 	dateTimePickerOptions:{format:$data.dateFormat || 'YYYY-MM-DD HH:mm:ss'}" />
                 <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" 
-                       data-bind="visible:!value.isValid(),attr:{title:value.error}"></span>
+                       data-bind="visible:value.isValid ? !value.isValid() : false,attr:{title:value.error}"></span>
                 <span class="input-group-addon">
                    <span class="glyphicon glyphicon-calendar"></span>
                 </span>

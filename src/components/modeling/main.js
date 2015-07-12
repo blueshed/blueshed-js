@@ -222,11 +222,30 @@
 				var zip = new JSZip();
 
 				zip.file("model.json", ko.toJSON(this.models,null,2));
+				zip.file("model.py", this.settings.langs.SQLAlchemy.to_text(ko.toJS(this.models)).body);
+				zip.file("model.sql", this.settings.sqls.MySQL.to_text(ko.toJS(this.models)).body);
 
 				var content = zip.generate();
 
 				location.href = "data:application/zip;base64," + content;
 
+			}.bind(this));
+		};
+		
+		ModellingAppl.prototype.save_model = function(){
+			var json_model = ko.toJSON(this.models,null,2);
+			var sqla_model = this.settings.langs.SQLAlchemy.to_text(ko.toJS(this.models)).body;
+			this.appl.save_model(json_model,sqla_model);
+		};
+		
+		ModellingAppl.prototype.fetch_model = function(){
+			this.appl.connection.send({
+				action: "fetch_model"
+			},function(response){
+				if(response.result){
+					var new_models = JSON.parse(response.result);
+					this._load_model(new_models);
+				}
 			}.bind(this));
 		};
 

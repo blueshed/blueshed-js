@@ -3,7 +3,7 @@ define([
 		"text!./main-tmpl.html",
 		"./cursor",
 		"blueshed/editor",
-		"bridge/model/colours",
+		"./colours",
 		"text!./cursor-table-tmpl.html",
 		"text!./editor-form-tmpl.html",
 		"text!./field-selector-tmpl.html",
@@ -110,6 +110,7 @@ define([
 		Panel.prototype.save = function() {
 			this.cursor.store.save(this.editing().save(), function(result){
 				this.editing(null);
+				this.cursor.load(); // NO tbd:signal internally
 			}.bind(this));
 		};
 
@@ -118,13 +119,18 @@ define([
 		};
 
 		Panel.prototype.remove = function() {
-			if(!this.editing().id){
-				this.close();
-			} else {
+			if(this.editing()){
+				if(!this.editing().id){
+					this.cancel();
+					return;
+				}
+			}
+			if(this.cursor.selected_data().id){
 				this.appl.confirm("Remove Project","Are you sure you want to remove this project?",function(){
 					this.appl.close_dialog();
-					this.appl.store.remove(this.selected(), function(){
-						this.close();
+					this.appl.store.remove(this.cursor.selected_data(), function(){
+						this.cancel();
+						this.cuursor.load(); // NO tbd:signal internally
 						this.appl.notify("Removed!");
 					}.bind(this));
 				}.bind(this),"Remove","danger");

@@ -1,0 +1,39 @@
+<!-- a nasty hack because select2 does not work with knockout -->
+<div class="form-group" data-bind="validationElement: value">
+    <!-- ko if: !$($element).parents("form").hasClass("form-horizontal")-->
+	    <label data-bind="attr:{for:'val_'+ name +'_fld'},
+	    						text: $data.label || name">label</label>
+	    <select class="form-control select2"
+	    	   data-bind="attr:{id:'val_'+ name +'_fld'},
+	    				  style:{width: !$($element).parents('form').hasClass('form-inline') ? '100%' : null}" >
+	    	   	<!-- ko if:$data.placeholder && $data.placeholder.id -->
+	    	   		<option data-bind="attr:{value:placeholder.id},text:placeholder.text"></option>
+	    	   	<!-- /ko -->
+	    </select>
+    <!-- /ko -->
+   <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+	    <label class="col-sm-3 control-label" 
+	    	   data-bind="attr:{for:'val_'+ name +'_fld'},
+    							text: $data.label || name">label</label>
+	    <div class="col-sm-9">
+		    <select class="form-control select2"
+			    	data-bind="attr:{id:'val_'+ name +'_fld'}" >
+	    	   	<!-- ko if:$data.placeholder && $data.placeholder.id -->
+	    	   		<option data-bind="attr:{value:placeholder.id},text:placeholder.text"></option>
+	    	   	<!-- /ko -->
+	    	</select>
+	    </div>
+	<!-- /ko -->
+	<div data-bind="template:{ 
+						afterRender: function(){
+							 $('#val_'+ name +'_fld').select2({ 
+								allowClear: true,
+							 	minimumInputLength: $data.minimumInputLength || 3,
+							 	ajax:{transport: query},
+						 	 	placeholder: $data.placeholder || name
+							 }).on('change',function(){
+							 	$data.value($('#val_'+ name +'_fld').val());
+							 });
+						}
+					}"></div>
+</div>

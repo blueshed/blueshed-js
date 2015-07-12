@@ -1,0 +1,17 @@
+<!-- a nasty hack because select2 does not work with knockout -->
+<select class="form-select select2"  data-bind="attr:{id:'val_'+ name + index() + '_fld'},
+	    		   with:placeholder" >
+	   	<option data-bind="attr:{value:id},text:text"></option>
+</select>
+<div data-bind="template:{ 
+					afterRender: function(){
+						 $('#val_'+ name + index() + '_fld').select2({ 
+							allowClear: true,
+						 	minimumInputLength: $data.minimumInputLength || 3,
+						 	ajax:{transport: query},
+					 	 	placeholder: placeholder || name
+						 }).on('change',function(){
+						 	$data.value($('#val_'+ name + index() + '_fld').val());
+						 });
+					}
+				}"></div>

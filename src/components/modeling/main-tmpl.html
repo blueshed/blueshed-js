@@ -175,7 +175,7 @@
 			<!-- ko foreach:langs -->
 			<li>
 				<a href="#" data-bind="click:$parent.selected_lang">
-					<i class="fa fa-check" 
+					<i class="fa fa-check fa-fw" 
 						  data-bind="css:{'icon-white':$data!=$parent.selected_lang()}">
 					</i>
 					<span data-bind="text:$data"></span>
@@ -186,7 +186,7 @@
 			<!-- ko foreach:sqls -->
 			<li>
 				<a href="#" data-bind="click:$parent.selected_sql">
-					<i class="fa fa-check"
+					<i class="fa fa-check fa-fw"
 						  data-bind="css:{'icon-white':$data!=$parent.selected_sql()}">
 					</i>
 					<span data-bind="text:$data"></span>
@@ -195,8 +195,20 @@
 			<!-- /ko -->
 			<li class="divider"></li>
 			<li>
+				<a href="#" data-bind="click:$.proxy($data.save_model,$data)">
+					<i class="fa fa-flag fa-fw text-danger"></i>
+					<span>Build</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" data-bind="click:$.proxy($data.fetch_model,$data)">
+					<i class="fa fa-flag fa-fw text-success"></i>
+					<span>Fetch</span>
+				</a>
+			</li>
+			<li>
 				<a href="#" data-bind="click:$.proxy($data.download_zip,$data)">
-					<i class="fa fa-download"></i>
+					<i class="fa fa-download fa-fw"></i>
 					<span>Download</span>
 				</a>
 			</li>
