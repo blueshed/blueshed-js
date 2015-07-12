@@ -6,8 +6,8 @@
 	    <select class="form-control select2"
 	    	   data-bind="attr:{id:'val_'+ name +'_fld'},
 	    				  style:{width: !$($element).parents('form').hasClass('form-inline') ? '100%' : null}" >
-	    	   	<!-- ko if:$data.placeholder && $data.placeholder.id -->
-	    	   		<option data-bind="attr:{value:placeholder.id},text:placeholder.text"></option>
+	    	   	<!-- ko if:ko.unwrap($data.placeholder) && ko.unwrap($data.placeholder).id -->
+	    	   		<option data-bind="attr:{value:ko.unwrap(placeholder).id},text:ko.unwrap(placeholder).text"></option>
 	    	   	<!-- /ko -->
 	    </select>
     <!-- /ko -->
@@ -18,8 +18,8 @@
 	    <div class="col-sm-9">
 		    <select class="form-control select2"
 			    	data-bind="attr:{id:'val_'+ name +'_fld'}" >
-	    	   	<!-- ko if:$data.placeholder && $data.placeholder.id -->
-	    	   		<option data-bind="attr:{value:placeholder.id},text:placeholder.text"></option>
+	    	   	<!-- ko if:ko.unwrap($data.placeholder) && ko.unwrap($data.placeholder).id -->
+	    	   		<option data-bind="attr:{value:ko.unwrap(placeholder).id},text:ko.unwrap(placeholder).text"></option>
 	    	   	<!-- /ko -->
 	    	</select>
 	    </div>

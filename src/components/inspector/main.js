@@ -101,10 +101,32 @@ define([
 			this.editing(new Editor(seed,meta));
 		};
 
+		Panel.prototype.add_related = function() {
+			if(this.display_many().direction == "ONETOMANY"){
+				var fkey_name = this.display_many().fkey;
+				var fkey_value = ko.unwrap(this.cursor.selected_data().id);
+				var related_property = this.many_cursor.selected().relations.find(function(item){
+					return item.fkey == fkey_name;
+				});
+				var args = {};
+				args[fkey_name]=fkey_value;
+				args[related_property.name]=this.cursor.selected_data();
+				var seed = this.many_cursor.store.seed_for(this.many_cursor.selected().name,args);
+				var meta = this.many_cursor.selected();
+				this.editing(new Editor(seed,meta));
+			}
+		};
+
 		Panel.prototype.edit = function() {
 			var item = this.cursor.selected_data();
 			this.editing(item ? new Editor(ko.toJS(item), 
 										   this.cursor.selected()) : null);
+		};
+
+		Panel.prototype.edit_related = function() {
+			var item = this.many_cursor.selected_data();
+			this.editing(item ? new Editor(ko.toJS(item), 
+										   this.many_cursor.selected()) : null);
 		};
 
 		Panel.prototype.save = function() {
@@ -160,8 +182,21 @@ define([
 
 		};
 
-		Panel.prototype.placeholder_for = function(meta, data){
-			return this.cursor.surrogate_for(data);
+		Panel.prototype.placeholder_for = function(meta, item){
+			item = ko.unwrap(item);
+			if(item){
+				var text = item._type + "[" + ko.unwrap(item.id) + "]";
+				if(item.name){
+					text =ko.unwrap(item.name);
+				} else if(item.label){
+					text =ko.unwrap(item.label);
+				}
+				return {
+					_type: item._type,
+					id: ko.unwrap(item.id),
+					text: text
+				};
+			}
 		};
 
 		Panel.prototype.photo_args = function(meta){
