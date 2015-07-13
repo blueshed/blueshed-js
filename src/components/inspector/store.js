@@ -22,10 +22,11 @@ define(["knockout",
             this._objs = {};
         }
 
-        Store.prototype.init = function(sqla_model){
+        Store.prototype.init = function(sqla_model, control_methods){
             if(this.open()){
                 return;
             }
+            this.control_methods = control_methods;
             this.sqla_model = sqla_model;
             sqla_model.map(function(clazz){
                 var properties = Object.keys(clazz.properties).map(function(n){

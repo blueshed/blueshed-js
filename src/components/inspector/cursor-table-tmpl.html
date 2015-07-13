@@ -1,5 +1,6 @@
 <div class="table-responsive">
-	<table class="table table-bordered table-condensed table-hover">
+	<table class="table table-bordered table-condensed table-hover"
+		   data-bind="event:{'keydown':table_keydown}" tabindex="0">
 		<thead>
 			<tr>
 				<!-- ko foreach:columns -->
@@ -38,6 +39,13 @@
 				<!-- ko switch: $data -->
 				<!-- ko case: $default -->
 				<td data-bind="text:$parent[$value.name]"></td>
+				<!-- /ko -->
+				<!-- ko case: $value.type=="Boolean" -->
+				<td style="text-align:center;">
+					<input type="checkbox" value="1" 
+						   data-bind="checked: $parent[$value.name]" 
+						   read-only="true" />
+				</td>
 				<!-- /ko -->
 				<!-- ko case: $value.direction=="MANYTOONE" -->
 				<td data-bind="text: $component.surrogate_text($parent[$value.name]) "></td>

@@ -40,9 +40,9 @@
 				</ul>
 			</div>
 		</div>
-		<h3 class="panel-title">
+		<h4 class="float-left">
 			Inspector
-		</h3>
+		</h4>
 	    <div class="clearfix"/>
 	</div>
 	<!-- ko ifnot: editing -->
@@ -53,7 +53,8 @@
 							  order_by_asc: cursor.order_by_asc,
 							  items: cursor.items,
 							  surrogate_text: cursor.surrogate_text.bind(cursor),
-							  selected_data: cursor.selected_data"></cursor-table>
+							  selected_data: cursor.selected_data,
+							  table_keydown: $component.table_keydown.bind($component,cursor)"></cursor-table>
 		<div class="panel-footer">
 			<ul class="pagination pull-right">
 				<li><a href="#" data-bind="click:cursor.prev.bind(cursor)">Prev</a></li>
@@ -127,7 +128,8 @@
 								  order_by_asc: order_by_asc,
 								  items: items,
 								  surrogate_text: $data.surrogate_text.bind($data),
-								  selected_data: selected_data"></cursor-table>
+								  selected_data: selected_data,
+							  	  table_keydown: $component.table_keydown.bind($component,$data)"></cursor-table>
 			<div class="panel-footer">
 				<ul class="pagination pull-right">
 					<li><a href="#" data-bind="click:$data.prev.bind($data)">Prev</a></li>

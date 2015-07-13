@@ -212,6 +212,38 @@ define([
         		});
         	}
         };
+        
+        
+        Panel.prototype.table_keydown = function(cursor,d,e){
+    	    switch(e.which) {
+    	        case 37: // left
+    	        break;
+
+    	        case 38: // up
+    	        	if(cursor.selected_data()){
+    	        		var index = cursor.items.indexOf(cursor.selected_data());
+    	        		if(index != 0){
+    	        			cursor.selected_data(cursor.items()[index-1]);
+    	        		}
+    	        	}
+    	        break;
+
+    	        case 39: // right
+    	        break;
+
+    	        case 40: // down
+    	        	if(cursor.selected_data()){
+    	        		var index = cursor.items.indexOf(cursor.selected_data());
+    	        		if(index < cursor.items().length-1){
+    	        			cursor.selected_data(cursor.items()[index+1]);
+    	        		}
+    	        	}
+    	        break;
+
+    	        default: return; // exit this handler for other keys
+    	    }
+    	    e.preventDefault(); // prevent the default action (scroll / move caret);
+        }
 
 		return {
 			template: main_tmpl,
