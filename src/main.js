@@ -100,6 +100,8 @@ define(["knockout",
 			}
 			return height + "px";
 		};
+		
+		Appl.prototype.save_preferences = function(namespace,values){};
 
 	return Appl;
 });

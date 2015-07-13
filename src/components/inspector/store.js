@@ -98,6 +98,15 @@ define(["knockout",
         Store.prototype.dispose = function() {
             this.sub.dispose();
         };
+        
+        
+        Store.prototype.get_person = function(id){
+        	return this.get("Person",id);
+        };
+        
+        Store.prototype.permissions = function(){
+        	return this.list("Permission");
+        };
 
 
         Store.prototype.get = function(type,id,values) {

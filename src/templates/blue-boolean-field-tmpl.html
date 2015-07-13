@@ -1,0 +1,29 @@
+<div class="form-group" 
+     data-bind="validationElement: value,
+								validationOptions: {insertMessages: false},
+                css:{'has-error has-feedback':value.isValid ? !value.isValid() : false}">    
+    <!-- ko ifnot: $($element).parents("form").hasClass("form-horizontal")-->
+        <label class="control-label">&nbsp;</label>               
+        <label class="form-control" data-bind="attr:{for:'val_'+ name +'_fld'}">
+        	   <input type="checkbox" value="1"
+								   data-bind="attr:{id:'val_'+ name +'_fld'},
+								   			  checked: $parent[$value.name]"/>
+        	<span data-bind="text: $data.label || name">label</span>
+        	<small data-bind="text:value.error"></small>
+        </label>
+    <!-- /ko -->
+
+    <!-- ko if: $($element).parents("form").hasClass("form-horizontal")-->
+        <label class="control-label col-sm-3">&nbsp;</label>
+        <div class="col-sm-9">
+            <label class="form-control"
+        	   data-bind="attr:{for:'val_'+ name +'_fld'}">
+	        	<input type="checkbox" value="1"
+									   data-bind="attr:{id:'val_'+ name +'_fld'},
+									   			  checked: $parent[$value.name]"/>
+	        	<span data-bind="text: $data.label || name">label</span>
+	        	<small data-bind="text:value.error"></small>
+	        </label>
+        </div>
+    <!-- /ko -->
+</div>

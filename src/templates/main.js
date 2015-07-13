@@ -4,13 +4,15 @@ define(
      "text!./blue-confirm-tmpl.html",
      "text!./blue-string-field-tmpl.html",
      "text!./blue-value-field-tmpl.html",
-     "text!./blue-text-field-tmpl.html"],
+     "text!./blue-text-field-tmpl.html",
+     "text!./blue-boolean-field-tmpl.html"],
 	function(ko, 
 			blue_error_tmpl,
             blue_confirm_tmpl,
 			blue_string_field_tmpl,
 			blue_value_field_tmpl,
-			blue_text_field_tmpl){
+			blue_text_field_tmpl,
+			blue_boolean_field_tmpl){
 		
         ko.components.register("blue-string-field",{
             template: blue_string_field_tmpl
@@ -30,6 +32,10 @@ define(
 
         ko.components.register("blue-confirm",{
             template: blue_confirm_tmpl
+        });
+
+        ko.components.register("blue-boolean-field",{
+            template: blue_boolean_field_tmpl
         });
     } 
 );
