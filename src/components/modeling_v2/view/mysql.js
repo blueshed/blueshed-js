@@ -55,7 +55,7 @@ define(["knockout"],
 				out.push("    `" + attr.name + "` decimal(" + attr.precision + "," + attr.scale + ") DEFAULT NULL,");
 			}
 			else if(attr.type === "Enum"){
-				var values = attr.values.split(",");
+				var values = attr.values ? attr.values.split(",") : [];
 				var enum_list = [];
 				for(var i=0; i < values.length; i++){
 					enum_list.push("'" + values[i].trim() + "'");

@@ -3,7 +3,6 @@ define(["knockout"],
 		
 		function SQL(params){
 			this.models = params.models;
-			this.template = "<pre data-bind='text:body'></pre>";
 			this.body = ko.computed(this.to_text,this,{deferEvalutation:true});
 		}
 	
