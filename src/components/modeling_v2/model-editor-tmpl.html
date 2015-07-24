@@ -1,0 +1,105 @@
+<div class="panel panel-default" data-bind="with:model">
+	<div class="panel-heading">
+		<!-- ko if:$parent.edit_name -->
+		<button class="btn btn-success pull-right"
+				data-bind="click:$parent.add" style="margin-left:6px;">
+			<span class="glyphicon glyphicon-plus"></span>
+		</button>
+		<div class="input-group col-md-7">
+		    <label class="sr-only" for="class_name_input">class name</label>
+			<input type="text" 
+				   class="form-control" 
+				   data-bind="textInput:$parent.edit_name,
+				   			  hasFocus:$parent.edit_model_name" 
+				   id="class_name_input"
+				   autofocus />
+  			<span class="input-group-btn">
+				<button class="btn btn-danger"
+						data-bind="click:$parent.remove">
+					<span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</span>
+		</div>
+		<!-- /ko -->
+		<!-- ko ifnot:$parent.edit_name -->
+		<h3 class="panel-title" data-bind="text:name">Panel title</h3>
+		<!-- /ko -->
+		<div class="clearfix"/>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th style="width:20%;">name</th>
+					<th style="width:15%;">type</th>
+					<th style="width:15%;" colspan="2">size/prec:scale</th>
+					<th style="width:20%;" title="attribute name on related object or enum values">backref/values</th>
+					<th style="width:10%;" title="attribute doc">doc</th>
+					<th class="icon-col" title="many to many relation"><i class="fa fa-fw fa-expand"></i></th>
+					<th class="icon-col" title="cascade delete"><i class="fa fa-fw fa-trash"></i></th>
+					<th class="icon-col" title="must be unique"><i class="fa fa-fw fa-child"></i></th>
+					<th class="icon-col" title="can be null"><i class="fa fa-fw fa-ban"></i></th>
+					<th class="icon-col" title="delete attribute">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach:attrs">
+				<tr class="edit-row">
+					<td class="edit-cell">
+						<input type="text" class="form-control" data-bind="textInput:name" autofocus/>
+					</td>
+					<td class="edit-cell">
+						 <select class="form-control"
+						 		 data-bind="options: $parents[1].all_types,
+						 					value:type,
+		                       				optionsCaption: 'Choose...'"></select>
+					</td>
+					<!-- ko ifnot:["Numeric"].indexOf(type())!==-1 -->
+					<td class="edit-cell" colspan="2">
+						<!-- ko if:["String"].indexOf(type())!==-1 -->
+						<input type="text" class="form-control" data-bind="textInput:size" placeholder="size" />
+						<!-- /ko -->
+					</td>
+					<!-- /ko -->
+					<!-- ko if:["Numeric"].indexOf(type())!==-1 -->
+						<td class="edit-cell">
+							<input type="text" class="form-control" data-bind="textInput:precision" placeholder="prec." />
+						</td>
+						<td class="edit-cell">
+							<input type="text" class="form-control" data-bind="textInput:scale" placeholder="scale" />
+						</td>
+					<!-- /ko -->
+					<td class="edit-cell">
+						<!-- ko if:$parents[1].default_types.indexOf(type())==-1 -->
+						<input type="text" class="form-control" data-bind="textInput:backref" placeholder="backref" />
+						<!-- /ko -->
+						<!-- ko if:["Enum"].indexOf(type())!==-1 -->
+						<input type="text" class="form-control" data-bind="textInput:values" placeholder="value list" />
+						<!-- /ko -->
+					</td>
+					<td class="edit-cell">
+						<input type="text" class="form-control" data-bind="textInput:doc" placeholder="" />
+					</td>
+					<td class="check-cell">
+						<!-- ko if:$parents[1].default_types.indexOf(type())==-1 -->
+						<input type="checkbox" data-bind="checked:m2m" />
+						<!-- /ko -->
+					</td>
+					<td class="check-cell">
+						<!-- ko if:$parents[1].default_types.indexOf(type())==-1 -->
+						<input type="checkbox" data-bind="checked:cascade" />
+						<!-- /ko -->
+					</td>
+					<td class="check-cell">
+						<input type="checkbox" data-bind="checked:unique" />
+					</td>
+					<td class="check-cell">
+						<input type="checkbox" data-bind="checked:nullable" />
+					</td>
+					<td class="check-cell">
+						<a href="#" class="link text-danger" data-bind="click:$parent.remove_attr.bind($parent)"><i class="fa fa-fw fa-trash"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

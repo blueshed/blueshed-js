@@ -1,0 +1,44 @@
+
+<div class="dropdown">
+	<button class="btn btn-default dropdown-toggle" type="button"
+		data-toggle="dropdown" aria-expanded="true">
+		<span data-bind="text:selected_schema"></span> <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu" data-bind="foreach:schemas">
+		<li role="presentation"
+			data-bind="css:{active:$parent.selected_schema()==$data}"><a
+			role="menuitem" tabindex="-1" href="#"
+			data-bind="click:$parent.selected_schema,text:$data">Action</a></li>
+	</ul>
+</div>
+
+<div class="row">
+	<div class="col-md-4" data-bind="with:schema">
+		<div class="list-group" data-bind="foreach:tables">
+		  <a href="#" class="list-group-item" 
+		  	 data-bind="css:{active:$parents[1].selected_table()==$data},
+		  	 			click:$parents[1].selected_table,text:name">
+		  </a>
+		</div>
+	</div>
+	<div class="col-md-8" data-bind="with:selected_table">
+		<div style="overflow:scroll;">
+			<model-editor id="model_editor"
+				  params="model:$data,
+						  default_types:$parent.default_types,
+						  types:$parent.types(),
+						  all_types:$parent.default_types.concat(['────']).concat($parent.types())"></model-editor>						
+		</div>
+		<div style="overflow: scroll;">
+			<table
+				class="table table-condensed table-bordered table-striped table-responsive table-hover"
+				data-bind="dataTable:{options:$parent.table_options()}">
+			</table>
+		</div>
+		<!-- ko with:$parent.table_data -->
+		<data-table params="rows:rows,cols:cols"></data-table>
+		<!-- /ko -->
+	</div>
+</div>
+<div data-bind="template:{ afterRender: $data.init.bind($data) }"></div>
+<pre data-bind="text:ko.toJSON(schema,null,2)"></pre>

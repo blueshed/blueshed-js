@@ -1,0 +1,53 @@
+<div class="row">
+	<div class="col-md-3">
+		<model-list params="items:models,
+							add:$data.add_model.bind($data),
+							open:$data.open.bind($data),
+							download_zip:$data.download_zip.bind($data),
+							active:selected_model"></model-list>
+	</div>
+	<div class="col-md-9" data-bind="with:selected_model">
+		<model-editor id="model_editor"
+					  params="model:$data,
+							  edit_name: $parent.edit_name,
+							  remove:$parent.remove_model.bind($parent,$data),
+							  add:$data.add_attr.bind($data,null),
+							  default_types:$parent.default_types,
+							  types:$parent.types(),
+							  edit_model_name: $parent.edit_model_name,
+							  all_types:$parent.default_types.concat(['────']).concat($parent.types())"></model-editor>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div role="tabpanel">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation"><a href="#_json" aria-controls="json"
+					role="tab" data-toggle="tab">JSON</a></li>
+				<li role="presentation" class="active"><a href="#_sa"
+					aria-controls="slqlalchemy" role="tab" data-toggle="tab">SQLAlchemy</a></li>
+				<li role="presentation"><a href="#_mysql"
+					aria-controls="mysql" role="tab" data-toggle="tab">MySQL</a></li>
+				<li role="presentation"><a href="#_sqlite"
+					aria-controls="sqlite" role="tab" data-toggle="tab">SQLite</a></li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane" id="_json">
+					<pre data-bind="text:ko.toJSON(models,null,2)"></pre>
+				</div>
+				<div role="tabpanel" class="tab-pane active" id="_sa">
+					<sa-script params="models:models"></sa-script>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="_mysql">
+					<mysql-script params="models:models"></mysql-script>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="_sqlite">
+					<sqlite-script params="models:models"></sqlite-script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div data-bind="template:{ afterRender: $data.init.bind($data) }"></div>

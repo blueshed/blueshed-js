@@ -1,0 +1,13 @@
+<div style="margin-bottom:6px;">
+<div class="list-group" data-bind="foreach:items">
+  <a href="#" class="list-group-item" 
+  	 data-bind="css:{active:$parent.active()==$data},click:$parent.active,text:name">
+  </a>
+</div>
+<button class="btn btn-default"
+		data-bind="click:add">Add</button>
+<button class="btn btn-default"
+		data-bind="click:download_zip">Download</button>
+<button class="btn btn-default"
+		data-bind="click:open">Open</button>
+</div>

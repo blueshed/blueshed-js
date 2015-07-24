@@ -133,6 +133,14 @@ define(
 			}
 		};
 		
+		
+		Connection.prototype.rpc = function(method, args, callback, target){
+			this.send({
+				action: method,
+				args: args
+			},callback,target)
+		};
+		
 		return Connection;
 	}
 );

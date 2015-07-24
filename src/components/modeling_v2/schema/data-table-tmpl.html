@@ -1,0 +1,15 @@
+<div style="overflow: scroll;">
+	<table
+		class="table table-bordered table-condensed table-hover">
+		<thead>
+			<tr data-bind="foreach: cols">
+				<th data-bind="text:$data[0]"></th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: {data: rows, as:'row'}">
+			<tr data-bind="foreach: {data: $parent.cols, as: 'col'}">
+				<td data-bind="text:row[$index()]"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
